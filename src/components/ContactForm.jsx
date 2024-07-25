@@ -2,7 +2,7 @@ import { useId } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { addContact } from "../redux/contacts/contactsOps";
+import { addContact } from "../redux/contactsOps";
 
 const ContactForm = () => {
   const nameFieldId = useId();
