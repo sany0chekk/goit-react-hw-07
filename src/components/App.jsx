@@ -1,11 +1,18 @@
 import ContactForm from "./ContactForm";
 import SearchBox from "./SearchBox";
 import ContactList from "./ContactList";
-import { useSelector } from "react-redux";
-import { selectContacts } from "../redux/contactsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchContacts } from "../redux/contacts/contactsOps";
+import { selectFilteredContacts } from "../redux/contacts/contactsSlice";
 
 const App = () => {
-  const contacts = useSelector(selectContacts);
+  const visibleContacts = useSelector(selectFilteredContacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <div className="max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg mx-auto p-4 flex flex-col gap-4 min-h-screen">
@@ -19,13 +26,13 @@ const App = () => {
           <ContactForm />
           <SearchBox />
         </div>
-        <div className=" p-4 bg-neutral-700 rounded-md flex-grow">
-          {contacts.length > 0 ? (
+        <div className="relative p-4 bg-neutral-700 rounded-md flex-grow">
+          {visibleContacts.length > 0 ? (
             <ContactList />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <p className="md:text-xl">List is empty!</p>
-            </div>
+            <p className="text-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              List is empty
+            </p>
           )}
         </div>
       </div>

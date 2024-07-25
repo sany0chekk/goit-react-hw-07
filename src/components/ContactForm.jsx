@@ -2,7 +2,7 @@ import { useId } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { addContact } from "../redux/contactsSlice";
+import { addContact } from "../redux/contacts/contactsOps";
 
 const ContactForm = () => {
   const nameFieldId = useId();
@@ -10,12 +10,12 @@ const ContactForm = () => {
   const dispatch = useDispatch();
 
   const initialValues = {
-    username: "",
+    name: "",
     number: "",
   };
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string()
+    name: Yup.string()
       .required("Required!")
       .min(3, "Too short!")
       .max(50, "Name must be at most 50 characters!")
@@ -32,7 +32,7 @@ const ContactForm = () => {
   });
 
   const handleSubmit = (values, actions) => {
-    dispatch(addContact(values.username, values.number));
+    dispatch(addContact(values));
     actions.resetForm();
   };
 
@@ -49,12 +49,12 @@ const ContactForm = () => {
           </label>
           <Field
             type="text"
-            name="username"
+            name="name"
             id={nameFieldId}
             className="w-full bg-neutral-600 border border-neutral-500 rounded-md h-8 outline-none transition-colors focus:border-neutral-400 px-2 text-sm"
           />
           <ErrorMessage
-            name="username"
+            name="name"
             component="span"
             className="text-red-600 mt-1"
           />

@@ -1,15 +1,9 @@
 import { useSelector } from "react-redux";
 import Contact from "./Contact";
-import { selectContacts } from "../redux/contactsSlice";
-import { selectNameFilter } from "../redux/filtersSlice";
+import { selectFilteredContacts } from "../redux/contacts/contactsSlice";
 
 const ContactList = () => {
-  const contacts = useSelector(selectContacts);
-  const filteredName = useSelector(selectNameFilter);
-
-  const visibleContacts = contacts.filter(({ name }) =>
-    name.toLowerCase().includes(filteredName.toLocaleLowerCase())
-  );
+  const visibleContacts = useSelector(selectFilteredContacts);
 
   return (
     <ul className="grid gap-2">
