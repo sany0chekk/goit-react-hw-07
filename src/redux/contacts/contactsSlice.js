@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { fetchContacts, addContact, deleteContact } from "./contactsOps";
-import { selectNameFilter } from "../filtersSlice";
+import { selectNameFilter } from "../filters/filtersSlice";
 
 const slice = createSlice({
   name: "contacts",
@@ -19,9 +19,9 @@ const slice = createSlice({
         state.loading = false;
         state.items = action.payload;
       })
-      .addCase(fetchContacts.rejected, (state) => {
+      .addCase(fetchContacts.rejected, (state, action) => {
         state.loading = false;
-        state.error = true;
+        state.error = action.payload;
       })
       .addCase(addContact.pending, (state) => {
         state.loading = true;
@@ -31,8 +31,8 @@ const slice = createSlice({
         state.loading = false;
         state.items.push(action.payload);
       })
-      .addCase(addContact.rejected, (state) => {
-        state.error = true;
+      .addCase(addContact.rejected, (state, action) => {
+        state.error = action.payload;
         state.loading = false;
       })
       .addCase(deleteContact.pending, (state) => {
@@ -45,19 +45,16 @@ const slice = createSlice({
           (item) => item.id !== action.payload.id
         );
       })
-      .addCase(deleteContact.rejected, (state) => {
-        state.error = true;
+      .addCase(deleteContact.rejected, (state, action) => {
+        state.error = action.payload;
         state.loading = false;
       });
   },
-  //   deleteContact(state, action) {
-  //     state.items = state.items.filter(
-  //       (contact) => contact.id !== action.payload
-  //     );
-  //   },
 });
 
 export const selectContacts = (state) => state.contacts.items;
+export const selectLoading = (state) => state.contacts.loading;
+export const selectError = (state) => state.contacts.error;
 
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],

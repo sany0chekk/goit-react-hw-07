@@ -26,9 +26,10 @@ const ContactForm = () => {
       ),
     number: Yup.string()
       .required("Required!")
-      .min(3, "Too short!")
-      .max(50, "Number must be at most 50 characters!")
-      .matches(/^[0-9-]+$/, "Number must contain only digits and -"),
+      .matches(
+        /^\+380-\d{2}-\d{3}-\d{2}-\d{2}$/,
+        "Number must be in the format +380-67-000-00-00"
+      ),
   });
 
   const handleSubmit = (values, actions) => {

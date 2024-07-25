@@ -1,13 +1,11 @@
 import ContactForm from "./ContactForm";
 import SearchBox from "./SearchBox";
 import ContactList from "./ContactList";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchContacts } from "../redux/contacts/contactsOps";
-import { selectFilteredContacts } from "../redux/contacts/contactsSlice";
 
 const App = () => {
-  const visibleContacts = useSelector(selectFilteredContacts);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,13 +25,7 @@ const App = () => {
           <SearchBox />
         </div>
         <div className="relative p-4 bg-neutral-700 rounded-md flex-grow">
-          {visibleContacts.length > 0 ? (
-            <ContactList />
-          ) : (
-            <p className="text-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              List is empty
-            </p>
-          )}
+          <ContactList />
         </div>
       </div>
     </div>
