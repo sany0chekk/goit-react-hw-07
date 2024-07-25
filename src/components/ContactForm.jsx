@@ -24,12 +24,11 @@ const ContactForm = () => {
         "Name cannot be only spaces!",
         (value) => value.trim() !== ""
       ),
-    number: Yup.string()
-      .required("Required!")
-      .matches(
-        /^\+380-\d{2}-\d{3}-\d{2}-\d{2}$/,
-        "Number must be in the format +380-67-000-00-00"
-      ),
+    number: Yup.string().required("Required!"),
+    // .matches(
+    //   /^\+380-\d{2}-\d{3}-\d{2}-\d{2}$/,
+    //   "Number must be in the format +380-67-000-00-00"
+    // ),
   });
 
   const handleSubmit = (values, actions) => {
